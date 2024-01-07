@@ -16,10 +16,10 @@ class MainWindow(QMainWindow):
 
     def openFile(self):
         options = QFileDialog.Options()
-        options |= QFileDialog.ReadOnly  # 如果需要只读文件，可以添加此选项
+        options |= QFileDialog.ReadOnly
         file_dialog = QFileDialog(self, options=options)
         file_dialog.setWindowTitle("选择文件")
-        file_dialog.setFileMode(QFileDialog.ExistingFile)  # 选择一个已存在的文件
+        file_dialog.setFileMode(QFileDialog.ExistingFile)
         file_dialog.setNameFilter("文本文件 (*.txt);;所有文件 (*)")
 
         if file_dialog.exec_():
@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
                 self.current_file_path = selected_file
                 with open(selected_file, "r") as f:
                     if selected_file:
-                        file_name = selected_file.split("/")[-1]  # 获取文件名部分
+                        file_name = selected_file.split("/")[-1]
                         items = self.ui.files_listWidget.findItems(file_name, Qt.MatchExactly)
                         if not items:
                             self.ui.files_listWidget.addItem(file_name)
