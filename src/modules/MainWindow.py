@@ -1,5 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QFileDialog
+
+from src.modules.NewFileDialog import NewFileDialog
 from src.ui.MainWindowUI import Ui_MainWindow
 
 
@@ -8,11 +10,14 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.newFileDialog = NewFileDialog()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.openFile_pushButton.clicked.connect(self.openFile)
         self.ui.content_textEdit.textChanged.connect(self.saveFile)
         self.ui.files_listWidget.itemSelectionChanged.connect(self.changeFile)
+        self.ui.newFile_pushButton.clicked.connect(self.newFile)
+        self.newFileDialog.newFileCreatedSignal.connect(self.addNewFile)
 
     def openFile(self):
         options = QFileDialog.Options()
@@ -44,3 +49,9 @@ class MainWindow(QMainWindow):
     def saveFile(self):
         with open(self.current_file_path, "w") as f:
             f.write(self.ui.content_textEdit.toPlainText())
+
+    def newFile(self):
+        self.newFileDialog.show()
+
+    def addNewFile(self, file_name):
+        self.ui.files_listWidget.addItem(file_name.split("\\")[-1])
