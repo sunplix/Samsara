@@ -82,6 +82,7 @@ class Ui_MainWindow(object):
         self.content_textEdit = QTextEdit(self.content_frame)
         self.content_textEdit.setObjectName(u"content_textEdit")
         self.content_textEdit.setStyleSheet(u"border:None;")
+        self.content_textEdit.setReadOnly(True)
 
         self.gridLayout.addWidget(self.content_textEdit, 0, 0, 1, 1)
 
